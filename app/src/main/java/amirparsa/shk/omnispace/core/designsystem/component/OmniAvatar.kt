@@ -26,7 +26,8 @@ fun OmniAvatar(
     name: String,
     modifier: Modifier = Modifier,
     size: Dp = 40.dp,
-    isOnline: Boolean = true
+    isOnline: Boolean = true,
+    statusColor: Color? = null
 ) {
     val initials = name.split(" ")
         .filter { it.isNotBlank() }
@@ -42,6 +43,8 @@ fun OmniAvatar(
             Color(0xFF3B82F6)
         )
     )
+
+    val effectiveStatusColor = statusColor ?: if (isOnline) StatusSuccess else null
 
     Box(
         modifier = modifier.size(size),
@@ -70,14 +73,14 @@ fun OmniAvatar(
             }
         }
 
-        // Online status dot
-        if (isOnline) {
+        // Presence status dot
+        if (effectiveStatusColor != null) {
             Box(
                 modifier = Modifier
                     .size(size * 0.28f)
                     .align(Alignment.BottomEnd)
                     .offset(x = 1.dp, y = 1.dp)
-                    .background(StatusSuccess, CircleShape)
+                    .background(effectiveStatusColor, CircleShape)
                     .border(2.dp, OmniTheme.colors.canvas, CircleShape)
             )
         }

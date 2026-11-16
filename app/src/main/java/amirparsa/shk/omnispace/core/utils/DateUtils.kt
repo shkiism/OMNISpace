@@ -89,6 +89,17 @@ object DateUtils {
     }
 
     /**
+     * Returns current device time as HH:mm with Persian digits (or English if desired)
+     */
+    fun getCurrentTimeString(persianDigits: Boolean = false): String {
+        val cal = java.util.Calendar.getInstance()
+        val hour = cal.get(java.util.Calendar.HOUR_OF_DAY)
+        val minute = cal.get(java.util.Calendar.MINUTE)
+        val rawTime = String.format(Locale.US, "%02d:%02d", hour, minute)
+        return if (persianDigits) NumberUtils.toPersianDigits(rawTime) else rawTime
+    }
+
+    /**
      * Converts ISO 8601 string (e.g. 2026-11-09T13:00:03.158Z) to relative Persian time
      */
     fun toRelativeTimeFa(isoString: String?): String {
